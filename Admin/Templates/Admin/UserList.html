@@ -1,0 +1,88 @@
+{% extends 'Admin/Header.html' %}
+{% block content %}
+<head>
+    <title>User List</title>
+
+</head>
+<style>
+/* ================= User List Page CSS ================= */
+
+.userlist-wrapper {
+    width: 95%;
+    margin: 30px auto;
+    color: #000000;
+}
+
+/* Page Heading */
+.userlist-heading {
+    font-size: 26px;
+    font-weight: bold;
+    color: #0b3c6d; /* Dark Blue */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Table */
+.userlist-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.userlist-table td,
+.userlist-table th {
+    border: 1px solid #000000;
+    padding: 10px;
+    color: #000000;
+    text-align: center;
+}
+
+/* Table Header */
+.userlist-table th {
+    background-color: #e6f0ff;
+    color: #0b3c6d;
+}
+
+/* User Photo */
+.userlist-photo {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+}
+</style>
+
+<div class="userlist-wrapper">
+
+    <div class="userlist-heading">User List</div>
+
+    <table class="userlist-table">
+        <tr>
+            <th>SI NO</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Photo</th>
+            <th>District</th>
+            <th>Place</th>
+        </tr>
+
+        {% for i in userdata %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.user_name }}</td>
+            <td>{{ i.user_email }}</td>
+            <td>{{ i.user_contact }}</td>
+            <td>{{ i.user_address }}</td>
+            <td>
+                <img src="{{ i.user_photo.url }}" alt="User Photo" class="userlist-photo">
+            </td>
+            <td>{{ i.place.district.district_name }}</td>
+            <td>{{ i.place.place_name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}

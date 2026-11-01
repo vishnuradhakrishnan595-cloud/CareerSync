@@ -1,0 +1,240 @@
+{% extends 'Guest/Header.html' %}
+{% block content %}
+<head>
+    <title>User Registration</title>
+</head>
+<style>
+/* ===== User Registration Page Styles ===== */
+.ur-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ur-form-box {
+    width: 600px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.ur-form-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #0b2c4d;
+}
+
+.ur-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ur-table td {
+    padding: 10px;
+    font-size: 15px;
+}
+
+.ur-table input[type="text"],
+.ur-table input[type="email"],
+.ur-table input[type="password"],
+.ur-table input[type="date"],
+.ur-table textarea,
+.ur-table select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.ur-table textarea {
+    resize: none;
+    height: 80px;
+}
+
+.ur-radio-group input {
+    margin-right: 5px;
+}
+
+.ur-radio-group label {
+    margin-right: 15px;
+}
+
+.ur-file-input {
+    border: none;
+}
+
+.ur-btn-group {
+    text-align: center;
+    padding-top: 15px;
+}
+
+.ur-btn-submit {
+    background-color: #0b2c4d;
+    color: white;
+    border: none;
+    padding: 8px 25px;
+    font-size: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.ur-btn-submit:hover {
+    background-color: #061c33;
+}
+
+.ur-btn-cancel {
+    background-color: #777;
+    color: white;
+    border: none;
+    padding: 8px 25px;
+    font-size: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.ur-btn-cancel:hover {
+    background-color: #555;
+}
+</style>
+
+<div class="ur-wrapper">
+    <div class="ur-form-box">
+        <div class="ur-form-title">User Registration</div>
+
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="ur-table">
+                <tr>
+                    <td>Name</td>
+                    <td>
+                        <input type="text" name="txt_name" required placeholder="Enter Name"
+                        pattern="^[A-Z]+[a-zA-Z ]*$"
+                        title="First letter must be capital and only alphabets allowed">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Email</td>
+                    <td><input type="email" name="txt_email" required placeholder="Enter Email"></td>
+                </tr>
+
+                <tr>
+                    <td>Contact</td>
+                    <td>
+                        <input type="text" name="txt_contact" required placeholder="Enter Contact"
+                        pattern="[7-9]{1}[0-9]{9}"
+                        title="Phone number must start with 7-9">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Address</td>
+                    <td><textarea name="txt_address" required placeholder="Enter Address"></textarea></td>
+                </tr>
+
+                <tr>
+                    <td>Gender</td>
+                    <td class="ur-radio-group">
+                        <label><input type="radio" name="btn_gender" value="Male" required >Male</label>
+                        <label><input type="radio" name="btn_gender" value="Female">Female</label>
+                        <label><input type="radio" name="btn_gender" value="Others">Others</label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>DOB</td>
+                    <td><input type="date" name="txt_dob" id="dob" required></td>
+                </tr>
+
+                <tr>
+                    <td>District</td>
+                    <td>
+                        <select name="sel_district" id="sel_district" required>
+                            <option value="">-----Select------</option>
+                            {% for i in districtDatas %}
+                            <option value="{{i.id}}">{{i.district_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Place</td>
+                    <td>
+                        <select name="sel_place" id="sel_place" required>
+                            <option value="">-----Select------</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Photo</td>
+                    <td><input type="file" name="file_photo" required class="ur-file-input"></td>
+                </tr>
+
+                <tr>
+                    <td>Password</td>
+                    <td>
+                        <input type="text" name="txt_password" required placeholder="Enter Password"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        title="At least one uppercase, lowercase, number & 8 characters">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Re-Password</td>
+                    <td><input type="password" name="txt_repassword" required placeholder="Enter Re-Password"></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" class="ur-btn-group">
+                        <input type="submit" value="Sign Up" class="ur-btn-submit">
+                        <input type="reset" value="Cancel" class="ur-btn-cancel">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+{% if msg %}
+<script>
+    alert("{{msg}}");
+    window.location = "{% url 'Guest:UserRegistration' %}";
+</script>
+{% endif %}
+
+
+<script>
+    const today = new Date();
+    const year = today.getFullYear() - 15;
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    const maxDate = `${year}-${month}-${day}`;
+    document.getElementById("dob").setAttribute("max", maxDate);
+</script>
+<!-- jQuery & AJAX -->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$("#sel_district").change(function () {
+    var did = $(this).val();
+    $.ajax({
+        url: "{% url 'Guest:AjaxPlace' %}",
+        data: { did: did },
+        success: function (data) {
+            $("#sel_place").html(data);
+        }
+    });
+});
+</script>
+
+{% endblock %}

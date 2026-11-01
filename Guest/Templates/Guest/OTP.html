@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+
+    <!-- Lottie Player CDN -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Gemstones&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Rubik Gemstones', sans-serif;
+            background-color: #f0f4f8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Home Button */
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            background-color: #0b2c4d;
+            color: #ffffff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background-color: #061c33;
+        }
+
+        /* Card */
+        .otp-container {
+            display: flex;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            max-width: 850px;
+            width: 90%;
+        }
+
+        /* Animation */
+        .otp-animation {
+            width: 50%;
+            background-color: #eaf1ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .otp-animation lottie-player {
+            width: 80%;
+            height: 80%;
+        }
+
+        /* Form */
+        .otp-form {
+            width: 50%;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .otp-title {
+            text-align: center;
+            font-size: 30px;
+            color: #0b2c4d;
+            margin-bottom: 25px;
+        }
+
+        .otp-form label {
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .otp-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #bbb;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 4px;
+        }
+
+        .otp-btn {
+            width: 100%;
+            background-color: #0b2c4d;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .otp-btn:hover {
+            background-color: #061c33;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .otp-container {
+                flex-direction: column;
+            }
+
+            .otp-animation,
+            .otp-form {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="{% url 'Guest:index' %}" class="home-btn">Home</a>
+
+    <div class="otp-container">
+
+        <!-- Animation -->
+        <div class="login-animation">
+            <lottie-player 
+                src="https://assets6.lottiefiles.com/packages/lf20_w51pcehl.json"
+                background="transparent"
+                speed="1"
+                loop
+                autoplay>
+            </lottie-player>
+        </div>
+
+        <!-- Form -->
+        <div class="otp-form">
+            <div class="otp-title">OTP Verification</div>
+
+            <form action="" method="POST">
+                {% csrf_token %}
+
+                <label>Enter OTP</label>
+                <input type="text" name="txt_otp" maxlength="6" required placeholder="Enter OTP">
+
+                <input type="submit" value="Verify OTP" class="otp-btn">
+            </form>
+        </div>
+
+    </div>
+
+    {% if msg %}
+    <script>
+        alert("{{ msg }}");
+    </script>
+    {% endif %}
+
+</body>
+
+</html>

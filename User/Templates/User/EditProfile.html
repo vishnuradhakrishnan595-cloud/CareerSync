@@ -1,0 +1,157 @@
+{% extends 'User/Header.html' %}
+{% block content %}
+<head>
+    <title>Edit Profile</title>
+
+</head>
+<style>
+    /* ===== Edit Profile Page Styles ===== */
+
+    .editprofile-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .editprofile-card {
+        width: 450px;
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        font-family: Arial, sans-serif;
+    }
+
+    .editprofile-card h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #0a1f44; /* dark blue */
+    }
+
+    .editprofile-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .editprofile-table td {
+        padding: 10px;
+        vertical-align: middle;
+    }
+
+    .editprofile-table td:first-child {
+        font-weight: bold;
+        color: #333;
+        width: 35%;
+    }
+
+    .editprofile-input {
+        width: 100%;
+        padding: 7px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .editprofile-input:focus {
+        outline: none;
+        border-color: #0a1f44; /* dark blue */
+    }
+
+    .editprofile-btn {
+        background-color: #0a1f44; /* dark blue */
+        color: #ffffff;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    .editprofile-btn:hover {
+        background-color: #081a36; /* darker blue */
+    }
+</style>
+
+<div class="editprofile-wrapper">
+    <div class="editprofile-card">
+
+        <h2>Edit Profile</h2>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            <table class="editprofile-table">
+                <tr>
+                    <td>Name</td>
+                    <td>
+                        <input
+                            class="editprofile-input"
+                            type="text"
+                            name="txt_name"
+                            required placeholder="Enter Name"
+                            pattern="^[A-Z]+[a-zA-Z ]*$"
+                            title="Name Allows Only Alphabets, Spaces and First Letter Must Be Capital"
+                            value="{{ user.user_name }}">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Email</td>
+                    <td>
+                        <input
+                            class="editprofile-input"
+                            type="email"
+                            name="txt_email"
+                            required placeholder="Enter Email"
+                            value="{{ user.user_email }}">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Contact</td>
+                    <td>
+                        <input
+                            class="editprofile-input"
+                            type="text"
+                            name="txt_contact"
+                            required placeholder="Enter Contact"
+                            pattern="[7-9]{1}[0-9]{9}"
+                            title="Phone number must start with 7-9 and contain 10 digits"
+                            value="{{ user.user_contact }}">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Address</td>
+                    <td>
+                        <input
+                            class="editprofile-input"
+                            type="text"
+                            name="txt_address"
+                            required placeholder="Enter Address"
+                            value="{{ user.user_address }}">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="Update" class="editprofile-btn">
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+    </div>
+</div>
+
+{% if msg %}
+<script>
+    alert("{{ msg }}");
+    window.location = "{% url 'User:MyProfile' %}";
+</script>
+{% endif %}
+
+
+
+{% endblock %}
